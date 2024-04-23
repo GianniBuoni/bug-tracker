@@ -9,10 +9,15 @@ import z from "zod";
 import IssueFormErrorMessage from "./IssueFormErrorMessage";
 import axios from "axios";
 import IssueErrorFlag from "./IssueErrorFlag";
+import { IssueRecord } from "@/pocketbase-types";
 
-type NewIssueData = z.infer<typeof issueSchema>;
+type IssueData = z.infer<typeof issueSchema>;
 
-const IssueForm = () => {
+interface Props {
+  originalData?: IssueRecord;
+}
+
+const IssueForm = ({ originalData }: Props) => {
   const router = useRouter();
 
   const {
@@ -20,16 +25,19 @@ const IssueForm = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<NewIssueData>({ resolver: zodResolver(issueSchema) });
+  } = useForm<IssueData>({ resolver: zodResolver(issueSchema) });
 
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
-  const onSubmit = async (data: NewIssueData) => {
+  const onSubmit = async (data: IssueData) => {
     try {
       setLoading(true);
-      console.log(data);
-      await axios.post("/api/issues/", data);
+      if (originalData) {
+        await axios.patch("/api/issues/" + originalData.id, data);
+      } else {
+        await axios.post("/api/issues/", data);
+      }
       router.push("/issues");
       //THROW ERROR
     } catch (error) {
@@ -42,6 +50,7 @@ const IssueForm = () => {
     <form className="card md:w-3/5" onSubmit={handleSubmit(onSubmit)}>
       {error && <IssueErrorFlag>{error}</IssueErrorFlag>}
       <input
+        defaultValue={originalData?.title}
         placeholder="Title"
         className="input bg-base-300 mb-3"
         {...register("title")}
@@ -50,6 +59,7 @@ const IssueForm = () => {
         <IssueFormErrorMessage>{errors.title.message}</IssueFormErrorMessage>
       )}
       <textarea
+        defaultValue={originalData?.description}
         placeholder="Describe the issue. Please use Markdown notation!"
         rows={15}
         className="card card-body p-3"
@@ -61,7 +71,7 @@ const IssueForm = () => {
         </IssueFormErrorMessage>
       }
       <button type="submit" disabled={isLoading} className="btn btn-primary">
-        Submit
+        {originalData ? "Update" : "Submit"}
         {isLoading && (
           <span className="loading loading-spinner loading-sm"></span>
         )}
