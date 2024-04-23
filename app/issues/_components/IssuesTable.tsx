@@ -20,6 +20,7 @@ const IssuesTable = async () => {
             <th>Title</th>
             <th className="hidden md:table-cell">Status</th>
             <th className="hidden md:table-cell">Date Created</th>
+            <th className="hidden md:table-cell">Last Updated</th>
           </tr>
         </thead>
         <tbody>
@@ -41,6 +42,9 @@ const IssuesTable = async () => {
               </td>
               <td className="hidden md:table-cell">
                 <IssueTimeStamp rawDate={issue.created} />
+              </td>
+              <td className="hidden md:table-cell">
+                <IssueTimeStamp rawDate={issue.updated} />
               </td>
             </tr>
           ))}

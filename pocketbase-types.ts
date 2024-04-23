@@ -46,6 +46,7 @@ export type IssueRecord = {
   status: IssueStatusOptions;
   title: string;
   created: string;
+  updated: string;
 };
 
 export type PostRecord = {

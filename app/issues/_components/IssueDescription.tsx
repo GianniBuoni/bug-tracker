@@ -10,7 +10,10 @@ const IssueDescription = ({ issue }: { issue: IssueRecord }) => {
       <h1>{issue.title}</h1>
       <div className="flex items-center space-x-5 mb-5">
         <IssueStatusBadge status={issue.status} />
-        <IssueTimeStamp rawDate={issue.created} />
+        <p>
+          Last Updated:&emsp;
+          <IssueTimeStamp rawDate={issue.updated} />
+        </p>
       </div>
       <Markdown className="card card-bordered p-5 prose bg-base-300">
         {issue.description}
