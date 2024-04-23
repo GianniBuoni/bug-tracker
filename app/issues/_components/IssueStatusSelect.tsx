@@ -1,16 +1,21 @@
-import React from "react";
+import { IssueStatusOptions } from "@/pocketbase-types";
+import React, { useState } from "react";
 
 const IssueStatusSelect = () => {
+  const statuses = [
+    { value: "OPEN", label: "Open" },
+    { value: "IN_PROGRESS", label: "In Progress" },
+    { value: "CLOSED", label: "Closed" },
+  ];
+
   return (
-    <select className="select w-full max-w-xs">
-      <option disabled selected>
-        Pick your favorite Simpson
+    <select className="select mb-3 bg-base-300" defaultValue="DEFAULT">
+      <option disabled value="DEFAULT">
+        Edit Status
       </option>
-      <option>Homer</option>
-      <option>Marge</option>
-      <option>Bart</option>
-      <option>Lisa</option>
-      <option>Maggie</option>
+      {statuses.map((status) => (
+        <option value={status.value}>{status.label}</option>
+      ))}
     </select>
   );
 };

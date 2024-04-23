@@ -10,6 +10,7 @@ import IssueFormErrorMessage from "./IssueFormErrorMessage";
 import axios from "axios";
 import IssueErrorFlag from "./IssueErrorFlag";
 import { IssueRecord } from "@/pocketbase-types";
+import IssueStatusSelect from "./IssueStatusSelect";
 
 type IssueData = z.infer<typeof issueSchema>;
 
@@ -49,6 +50,7 @@ const IssueForm = ({ originalData }: Props) => {
   return (
     <form className="card md:w-3/5" onSubmit={handleSubmit(onSubmit)}>
       {error && <IssueErrorFlag>{error}</IssueErrorFlag>}
+      {originalData && <IssueStatusSelect />}
       <input
         defaultValue={originalData?.title}
         placeholder="Title"
