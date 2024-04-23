@@ -1,8 +1,8 @@
-import React, { cache } from "react";
-import IssueDescription from "../_components/IssueDescription";
 import { pb } from "@/app/_services/pb";
 import { IssueRecord } from "@/pocketbase-types";
 import { notFound } from "next/navigation";
+import IssueActionButton from "../_components/IssueActionButton";
+import IssueDescription from "../_components/IssueDescription";
 
 const IssueDescriptionPage = async ({ params }: { params: IssueRecord }) => {
   let issue: IssueRecord = null!;
@@ -15,9 +15,14 @@ const IssueDescriptionPage = async ({ params }: { params: IssueRecord }) => {
   }
 
   return (
-    <>
+    <div className="md:grid grid-cols-2 gap-4 space-y-3">
       <IssueDescription issue={issue} />
-    </>
+      <div className="space-y-2">
+        <IssueActionButton input={1} />
+        <IssueActionButton id={issue.id} input={2} />
+        <IssueActionButton id={issue.id} input={3} />
+      </div>
+    </div>
   );
 };
 

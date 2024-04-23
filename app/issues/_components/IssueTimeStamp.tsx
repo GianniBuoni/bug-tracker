@@ -6,9 +6,9 @@ const IssueTimeStamp = ({ rawDate }: Props) => {
   const shownDate = new Date(rawDate).toDateString();
   const shownTime = new Date(rawDate).toLocaleTimeString();
   return (
-    <span>
+    <p>
       {shownDate},&nbsp;&nbsp;{shownTime}
-    </span>
+    </p>
   );
 };
 

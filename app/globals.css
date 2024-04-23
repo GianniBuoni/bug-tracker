@@ -4,6 +4,6 @@
 
 @layer base {
   h1 {
-    @apply text-5xl mb-3;
+    @apply text-3xl md:text-5xl mb-3;
   }
 }
