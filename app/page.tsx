@@ -1,7 +1,8 @@
 export default function Home() {
   return (
     <>
-      <button className="btn btn-primary">Hello daisyUI!</button>
+      <h1>Welcome!</h1>
+      <button className="btn btn-primary">Sign in TK</button>
     </>
   );
 }
