@@ -1,10 +1,16 @@
 "use client";
 
+import { createIssueSchema } from "@/app/validationSchemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import SimpleMDE from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import z from "zod";
+import IssueFormErrorMessage from "./IssueFormErrorMessage";
+import axios from "axios";
+import IssueErrorFlag from "./IssueErrorFlag";
+
+type NewIssueData = z.infer<typeof createIssueSchema>;
 
 const IssueForm = () => {
   const router = useRouter();
@@ -13,17 +19,53 @@ const IssueForm = () => {
     register,
     control,
     handleSubmit,
-    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<NewIssueData>({ resolver: zodResolver(createIssueSchema) });
 
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
+
+  const onSubmit = async (data: NewIssueData) => {
+    try {
+      setLoading(true);
+      console.log(data);
+      await axios.post("/api/issues/", data);
+      router.push("/issues");
+      //THROW ERROR
+    } catch (error) {
+      setLoading(false);
+      setError("An unexpected server error occurred.");
+    }
+  };
+
   return (
-    <form className="card card-bordered md:w-3/5">
-      <input placeholder="Title" className="input bg-base-200 mb-3"></input>
-      <SimpleMDE placeholder="Describe the issue. This text editor notates everything in Markdown." />
-      <button className="btn btn-primary">Submit</button>
+    <form className="card md:w-3/5" onSubmit={handleSubmit(onSubmit)}>
+      {error && <IssueErrorFlag>{error}</IssueErrorFlag>}
+      <input
+        placeholder="Title"
+        className="input bg-base-300 mb-3"
+        {...register("title")}
+      ></input>
+      {errors.title && (
+        <IssueFormErrorMessage>{errors.title.message}</IssueFormErrorMessage>
+      )}
+      <textarea
+        placeholder="Describe the issue. Please use Markdown notation!"
+        rows={15}
+        className="card card-body p-3"
+        {...register("description")}
+      ></textarea>
+      {
+        <IssueFormErrorMessage>
+          {errors.description?.message}
+        </IssueFormErrorMessage>
+      }
+      <button type="submit" disabled={isLoading} className="btn btn-primary">
+        Submit
+        {isLoading && (
+          <span className="loading loading-spinner loading-sm"></span>
+        )}
+      </button>
     </form>
   );
 };
