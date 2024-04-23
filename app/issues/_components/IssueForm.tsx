@@ -1,6 +1,6 @@
 "use client";
 
-import { createIssueSchema } from "@/app/validationSchemas";
+import { issueSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -10,7 +10,7 @@ import IssueFormErrorMessage from "./IssueFormErrorMessage";
 import axios from "axios";
 import IssueErrorFlag from "./IssueErrorFlag";
 
-type NewIssueData = z.infer<typeof createIssueSchema>;
+type NewIssueData = z.infer<typeof issueSchema>;
 
 const IssueForm = () => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const IssueForm = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<NewIssueData>({ resolver: zodResolver(createIssueSchema) });
+  } = useForm<NewIssueData>({ resolver: zodResolver(issueSchema) });
 
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
