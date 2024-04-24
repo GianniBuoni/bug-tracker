@@ -7,6 +7,7 @@ import { IssueRecord } from "@/pocketbase-types";
 import { useRouter } from "next/navigation";
 import IssueErrorFlag from "./IssueErrorFlag";
 import IssueFormErrorMessage from "./IssueFormErrorMessage";
+import Spinner from "@/app/_components/Spinner";
 
 interface Props {
   originalData?: IssueRecord;
@@ -32,6 +33,7 @@ const IssueForm = ({ originalData }: Props) => {
         await axios.patch("/api/issues/" + originalData.id, data);
       else await axios.post("/api/issues/", data);
       router.push("/issues");
+      router.refresh();
     } catch (error) {
       setLoading(false);
       setError("An unexpected server error occurred.");
@@ -76,9 +78,7 @@ const IssueForm = ({ originalData }: Props) => {
       )}
       <button type="submit" disabled={loading} className="btn btn-primary">
         {originalData ? "Update" : "Submit"}
-        {loading && (
-          <span className="loading loading-spinner loading-sm"></span>
-        )}
+        {loading && <Spinner />}
       </button>
     </form>
   );

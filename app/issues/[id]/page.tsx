@@ -3,6 +3,7 @@ import { IssueRecord } from "@/pocketbase-types";
 import { notFound } from "next/navigation";
 import IssueActionButton from "../_components/IssueActionButton";
 import IssueDescription from "../_components/IssueDescription";
+import IssueDelete from "../_components/IssueDelete";
 
 const IssueDescriptionPage = async ({ params }: { params: IssueRecord }) => {
   let issue: IssueRecord = null!;
@@ -15,7 +16,7 @@ const IssueDescriptionPage = async ({ params }: { params: IssueRecord }) => {
   }
 
   return (
-    <div className="md:grid grid-cols-2 gap-4 space-y-3">
+    <div className="md:grid grid-cols-5 gap-4 space-y-3">
       <IssueDescription issue={issue} />
       <div className="space-y-2">
         <IssueActionButton
@@ -28,6 +29,7 @@ const IssueDescriptionPage = async ({ params }: { params: IssueRecord }) => {
           label="Edit"
           route={`${issue.id}/edit`}
         />
+        <IssueDelete id={issue.id} />
       </div>
     </div>
   );

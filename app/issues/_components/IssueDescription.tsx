@@ -6,7 +6,7 @@ import Markdown from "react-markdown";
 
 const IssueDescription = ({ issue }: { issue: IssueRecord }) => {
   return (
-    <div className="card card-bordered bg-base-300 p-2">
+    <div className="card card-bordered bg-base-300 p-2 col-span-3">
       <h1 className="p-5">{issue.title}</h1>
       <div className="border-y-2 px-5 py-5 space-y-2 md:flex md:space-y-0 md:space-x-5 items-center">
         <IssueStatusBadge status={issue.status} />
