@@ -5,12 +5,12 @@ const statusMap: Record<
   IssueStatusOptions,
   {
     label: string;
-    color: "badge-primary" | "badge-warning" | "badge-error";
+    color: "badge-accent" | "badge-warning" | "badge-error";
   }
 > = {
   OPEN: { label: "Open", color: "badge-error" },
   IN_PROGRESS: { label: "In Progress", color: "badge-warning" },
-  CLOSED: { label: "Closed", color: "badge-primary" },
+  CLOSED: { label: "Closed", color: "badge-accent" },
 };
 
 const IssueStatusBadge = ({ status }: { status: IssueStatusOptions }) => {

@@ -18,9 +18,16 @@ const IssueDescriptionPage = async ({ params }: { params: IssueRecord }) => {
     <div className="md:grid grid-cols-2 gap-4 space-y-3">
       <IssueDescription issue={issue} />
       <div className="space-y-2">
-        <IssueActionButton input={1} />
-        <IssueActionButton id={issue.id} input={2} />
-        <IssueActionButton id={issue.id} input={3} />
+        <IssueActionButton
+          color="btn-primary"
+          label="New"
+          route="/issues/new"
+        />
+        <IssueActionButton
+          color="btn-warning"
+          label="Edit"
+          route={`${issue.id}/edit`}
+        />
       </div>
     </div>
   );
