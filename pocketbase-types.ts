@@ -57,6 +57,10 @@ export type PostRecord = {
 export type UsersRecord = {
   avatar?: string;
   name?: string;
+  username: string;
+  email: string;
+  password: string;
+  identity: UsersRecord["email"] | UsersRecord["password"];
 };
 
 // Response types include system fields and match responses from the PocketBase API

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { IssueRecord } from "@/pocketbase-types";
+import { IssueRecord, IssueStatusOptions } from "@/pocketbase-types";
 import { useRouter } from "next/navigation";
 import IssueErrorFlag from "./IssueErrorFlag";
 import IssueFormErrorMessage from "./IssueFormErrorMessage";
@@ -23,10 +23,10 @@ const IssueForm = ({ originalData }: Props) => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<IssueRecord>();
 
   const onSubmit = async (data: IssueRecord) => {
-    console.log(data);
     try {
       setLoading(true);
       if (originalData)
@@ -40,13 +40,33 @@ const IssueForm = ({ originalData }: Props) => {
     }
   };
 
+  const statusColorMap: Record<
+    IssueStatusOptions,
+    {
+      color: string;
+    }
+  > = {
+    OPEN: { color: "bg-error" },
+    IN_PROGRESS: { color: "bg-warning" },
+    CLOSED: { color: "bg-accent" },
+  };
+
+  const statusBg = () => {
+    try {
+      const watchedStatusColor = statusColorMap[watch("status")].color;
+      return watchedStatusColor;
+    } catch (error) {
+      return statusColorMap[originalData?.status!].color;
+    }
+  };
+
   return (
     <form className="card md:w-3/5 space-y-3" onSubmit={handleSubmit(onSubmit)}>
       {error && <IssueErrorFlag>{error}</IssueErrorFlag>}
       {originalData && (
         <select
-          className="select bg-accent text-base-300"
-          defaultValue={originalData?.status}
+          defaultValue={originalData.status}
+          className={`select text-base-300 transition-colors ${statusBg()}`}
           {...register("status")}
         >
           <option value="OPEN">Open</option>
@@ -85,25 +105,3 @@ const IssueForm = ({ originalData }: Props) => {
 };
 
 export default IssueForm;
-
-//
-//       <textarea
-//         defaultValue={originalData?.description}
-//         placeholder="Describe the issue. Please use Markdown notation!"
-//
-//
-//         {...register("description")}
-//       ></textarea>
-//       {
-//         <IssueFormErrorMessage>
-//           {errors.description?.message}
-//         </IssueFormErrorMessage>
-//       }
-//       <button type="submit" disabled={isLoading} className="btn btn-primary">
-
-//       </button>
-//     </form>
-//   );
-// };
-
-// export default IssueForm;

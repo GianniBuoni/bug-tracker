@@ -2,7 +2,8 @@ import { IssueRecord } from "@/pocketbase-types";
 import React from "react";
 import IssueStatusBadge from "./IssueStatusBadge";
 import IssueTimeStamp from "./IssueTimeStamp";
-import Markdown from "react-markdown";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const IssueDescription = ({ issue }: { issue: IssueRecord }) => {
   return (
@@ -15,7 +16,9 @@ const IssueDescription = ({ issue }: { issue: IssueRecord }) => {
           <IssueTimeStamp rawDate={issue.updated} />
         </div>
       </div>
-      <Markdown className="p-5 prose">{issue.description}</Markdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]} className="p-5 prose">
+        {issue.description}
+      </ReactMarkdown>
     </div>
   );
 };
