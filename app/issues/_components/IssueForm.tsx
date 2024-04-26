@@ -29,10 +29,13 @@ const IssueForm = ({ originalData }: Props) => {
   const onSubmit = async (data: IssueRecord) => {
     try {
       setLoading(true);
-      if (originalData)
+      if (originalData) {
         await axios.patch("/api/issues/" + originalData.id, data);
-      else await axios.post("/api/issues/", data);
-      router.push("/issues");
+        router.push(`/issues/${originalData?.id}`);
+      } else {
+        await axios.post("/api/issues/", data);
+        router.push("/issues/");
+      }
       router.refresh();
     } catch (error) {
       setLoading(false);
