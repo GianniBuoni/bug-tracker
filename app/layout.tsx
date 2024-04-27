@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Chivo } from "next/font/google";
 import "./globals.css";
 import Navbar from "./_components/Navbar";
+import AuthProvider from "./_components/AuthProvider";
 
 const chivo = Chivo({ subsets: ["latin"] });
 
@@ -17,10 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={chivo.className}>
-        <Navbar />
-        <main className="px-5">{children}</main>
-      </body>
+      <AuthProvider>
+        <body className={chivo.className}>
+          <Navbar />
+          <main className="px-5">{children}</main>
+        </body>
+      </AuthProvider>
     </html>
   );
 }
