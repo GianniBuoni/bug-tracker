@@ -1,5 +1,6 @@
-import { pb } from "@/app/_services/pb";
+import { nowDate } from "@/app/_lib/nowDate";
 import { issueSchema } from "@/app/validationSchemas";
+import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(
@@ -11,8 +12,17 @@ export async function PATCH(
   if (!validation.success)
     return NextResponse.json(validation.error.errors, { status: 400 });
   try {
-    const issue = await pb.collection("issue").getOne(params.id);
-    const updatedIssue = await pb.collection("issue").update(issue.id, body);
+    const updatedIssue = await prisma.issues.update({
+      where: {
+        id: parseInt(params.id),
+      },
+      data: {
+        title: body.title,
+        description: body.description,
+        status: body.status,
+        updated: nowDate,
+      },
+    });
     return NextResponse.json(updatedIssue);
   } catch (error) {
     return NextResponse.json(
@@ -27,8 +37,11 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const issue = await pb.collection("issue").getOne(params.id);
-    const updatedIssue = await pb.collection("issue").delete(issue.id);
+    await prisma.issues.delete({
+      where: {
+        id: parseInt(params.id),
+      },
+    });
     return NextResponse.json({});
   } catch (error) {
     return NextResponse.json(
