@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { TbBugFilled } from "react-icons/tb";
+import NavDropdown from "./NavDropdown";
 
 const Navbar = () => {
   const pathName = usePathname();
@@ -40,10 +41,12 @@ const Navbar = () => {
       </div>
       <div>
         {status === "authenticated" && (
-          <Link href="/api/auth/signout">Log Out</Link>
+          <NavDropdown avatar={session.user!.image!} />
         )}
         {status === "unauthenticated" && (
-          <Link href="/api/auth/signin">Log In</Link>
+          <Link href="/api/auth/signin" className="btn m-1">
+            Log In
+          </Link>
         )}
       </div>
     </nav>
