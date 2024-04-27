@@ -1,5 +1,5 @@
 import { nowDate } from "@/app/_lib/nowDate";
-import { issueSchema } from "@/app/validationSchemas";
+import { issueSchema } from "@/app/_lib/validationSchemas";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 

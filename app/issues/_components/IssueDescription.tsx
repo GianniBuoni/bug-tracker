@@ -1,4 +1,4 @@
-import { IssueRecord } from "@/pocketbase-types";
+import { IssueRecord } from "@/app/_lib/definitions";
 import React from "react";
 import IssueStatusBadge from "./IssueStatusBadge";
 import IssueTimeStamp from "./IssueTimeStamp";

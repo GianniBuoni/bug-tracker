@@ -1,16 +1,12 @@
-import { pb } from "@/app/_services/pb";
-import { IssueRecord } from "@/pocketbase-types";
 import IssueStatusBadge from "./IssueStatusBadge";
-import { useReadableDate } from "@/app/_hooks/useReadableDate";
 import Link from "next/link";
 import IssueTimeStamp from "./IssueTimeStamp";
-
-//TODO: Make a className for all card components
+import prisma from "@/prisma/client";
+import { unstable_noStore as noStore } from "next/cache";
 
 const IssuesTable = async () => {
-  const issues: IssueRecord[] = await pb
-    .collection("issue")
-    .getFullList({ sort: "-created", cache: "no-cache" });
+  const issues = await prisma.issues.findMany();
+  noStore();
 
   return (
     <div className="card card-bordered bg-base-300">

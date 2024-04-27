@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { IssueRecord, IssueStatusOptions } from "@/pocketbase-types";
+import { IssueRecord, IssueStatusOptions } from "@/app/_lib/definitions";
 import { useRouter } from "next/navigation";
 import IssueErrorFlag from "./IssueErrorFlag";
 import IssueFormErrorMessage from "./IssueFormErrorMessage";

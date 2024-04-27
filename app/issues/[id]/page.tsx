@@ -1,19 +1,17 @@
-import { pb } from "@/app/_services/pb";
-import { IssueRecord } from "@/pocketbase-types";
+import { IssueRecord } from "@/app/_lib/definitions";
 import { notFound } from "next/navigation";
 import IssueActionButton from "../_components/IssueActionButton";
 import IssueDescription from "../_components/IssueDescription";
 import IssueDelete from "../_components/IssueDelete";
+import { issues } from "@prisma/client";
+import prisma from "@/prisma/client";
 
-const IssueDescriptionPage = async ({ params }: { params: IssueRecord }) => {
-  let issue: IssueRecord = null!;
-  try {
-    issue = await pb
-      .collection("issue")
-      .getOne(params.id, { cache: "no-cache" });
-  } catch (error) {
-    notFound();
-  }
+const IssueDescriptionPage = async ({ params }: { params: issues }) => {
+  const issue = await prisma.issues.findUniqueOrThrow({
+    where: {
+      id: parseInt(params.id),
+    },
+  });
 
   return (
     <div className="md:grid grid-cols-5 gap-4 space-y-3">

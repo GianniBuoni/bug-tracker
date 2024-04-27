@@ -1,5 +1,5 @@
 import React from "react";
-import { IssueRecord, IssueStatusOptions } from "@/pocketbase-types";
+import { IssueRecord, IssueStatusOptions } from "@/app/_lib/definitions";
 
 const statusMap: Record<
   IssueStatusOptions,
