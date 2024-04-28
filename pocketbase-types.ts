@@ -61,6 +61,7 @@ export type UsersRecord = {
   email: string;
   password: string;
   identity: UsersRecord["email"] | UsersRecord["password"];
+  id: string;
 };
 
 // Response types include system fields and match responses from the PocketBase API
