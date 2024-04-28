@@ -1,13 +1,11 @@
 "use client";
 import Spinner from "@/app/_components/Spinner";
-import { pb } from "@/app/_services/pb";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const IssueDelete = ({ id }: { id: string }) => {
   const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const router = useRouter();
 
   const deleteIssue = async () => {
@@ -18,7 +16,7 @@ const IssueDelete = ({ id }: { id: string }) => {
       router.refresh();
     } catch (error) {
       setLoading(false);
-      setError("An unexpected server error occurred. Error was not Deleted");
+      router.push("/api/auth/signin");
     }
   };
 
