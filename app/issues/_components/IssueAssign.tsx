@@ -1,18 +1,11 @@
-"use client";
+import { pb } from "@/app/_services/pb";
 import { UsersRecord } from "@/pocketbase-types";
-import axios from "axios";
-import { useEffect, useState } from "react";
 
-const IssueAssign = () => {
-  const [users, setUsers] = useState<UsersRecord[]>([]);
-
-  useEffect(() => {
-    const getUsers = async () => {
-      const { data } = await axios.get<UsersRecord[]>("/api/users");
-      setUsers(data);
-    };
-    getUsers();
-  }, []);
+const IssueAssign = async () => {
+  const users: UsersRecord[] = await pb.collection("users").getFullList({
+    fields: "username,email,name,id",
+    sort: "name",
+  });
 
   return (
     <select

@@ -9,6 +9,11 @@ export const nextAuth: NextAuthOptions = {
       clientSecret: process.env.GIT_HUB_SECRET!,
     }),
   ],
+  callbacks: {
+    async redirect({ baseUrl }) {
+      return baseUrl;
+    },
+  },
 };
 
 const handler = NextAuth(nextAuth);

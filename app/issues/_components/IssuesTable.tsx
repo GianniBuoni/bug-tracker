@@ -1,7 +1,6 @@
 import { pb } from "@/app/_services/pb";
 import { IssueRecord } from "@/pocketbase-types";
 import IssueStatusBadge from "./IssueStatusBadge";
-import { useReadableDate } from "@/app/_hooks/useReadableDate";
 import Link from "next/link";
 import IssueTimeStamp from "./IssueTimeStamp";
 

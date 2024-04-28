@@ -6,10 +6,10 @@ const NavState = () => {
   const { status, data: session } = useSession();
 
   if (status !== "authenticated")
-    return <Link href={"api/auth/signout"}>Log Out</Link>;
+    return <Link href={"/api/auth/signin"}>Log In</Link>;
   return (
     <div className="dropdown dropdown-end">
-      <div tabIndex={0} role="button" className="btn btn-circle m-1">
+      <div tabIndex={0} role="button" className="btn btn-circle">
         <img src={session!.user!.image!} alt="avatar" width={30} height={30} />
       </div>
       <ul
