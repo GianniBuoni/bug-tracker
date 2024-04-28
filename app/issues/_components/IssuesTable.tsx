@@ -1,15 +1,27 @@
 import { pb } from "@/app/_services/pb";
-import { IssueRecord } from "@/pocketbase-types";
+import { IssueRecord, IssueStatusOptions } from "@/pocketbase-types";
 import IssueStatusBadge from "./IssueStatusBadge";
 import Link from "next/link";
 import IssueTimeStamp from "./IssueTimeStamp";
 
-//TODO: Make a className for all card components
+interface Props {
+  status: IssueStatusOptions;
+}
 
-const IssuesTable = async () => {
-  const issues: IssueRecord[] = await pb
-    .collection("issue")
-    .getFullList({ sort: "-created", cache: "no-cache" });
+const IssuesTable = async ({ status }: Props) => {
+  let issues: IssueRecord[] = null!;
+  if (status) {
+    issues = await pb.collection("issue").getFullList({
+      sort: "-created",
+      filter: `status='${status}'`,
+      cache: "no-store",
+    });
+  } else {
+    issues = await pb.collection("issue").getFullList({
+      sort: "-created",
+      cache: "no-store",
+    });
+  }
 
   return (
     <div className="card card-bordered bg-base-300">

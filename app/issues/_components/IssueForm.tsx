@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import IssueErrorFlag from "./IssueErrorFlag";
 import IssueFormErrorMessage from "./IssueFormErrorMessage";
 import Spinner from "@/app/_components/Spinner";
+import IssueStatusSelectOptions from "./IssueStatusSelectOptions";
 
 interface Props {
   originalData?: IssueRecord;
@@ -72,9 +73,7 @@ const IssueForm = ({ originalData }: Props) => {
           className={`select text-base-300 transition-colors ${statusBg()}`}
           {...register("status")}
         >
-          <option value="OPEN">Open</option>
-          <option value="IN_PROGRESS"> In progress</option>
-          <option value="CLOSED"> Closed</option>
+          <IssueStatusSelectOptions />
         </select>
       )}
       <input
