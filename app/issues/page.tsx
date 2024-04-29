@@ -11,17 +11,14 @@ interface Props {
 const IssuesPage = ({ searchParams }: Props) => {
   return (
     <>
-      <div className="flex justify-between">
-        <div className="flex space-x-5">
-          <h1>Current Issues</h1>
-          <IssuesPageFilter />
-        </div>
+      <h1>Current Issues</h1>
+      <div className="flex md:justify-between space-x-3 my-3">
+        <IssuesPageFilter defaultValue={searchParams.status} />
         <Link href="/issues/new">
           <button className="btn btn-primary">New Issue</button>
         </Link>
       </div>
-
-      <IssuesTable status={searchParams.status} />
+      <IssuesTable params={searchParams} />
     </>
   );
 };
