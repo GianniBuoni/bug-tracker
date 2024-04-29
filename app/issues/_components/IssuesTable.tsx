@@ -1,4 +1,3 @@
-import { pb } from "@/app/_services/pb";
 import { IssueRecord, IssueStatusOptions } from "@/pocketbase-types";
 import IssueStatusBadge from "./IssueStatusBadge";
 import Link from "next/link";
@@ -6,7 +5,11 @@ import IssueTimeStamp from "./IssueTimeStamp";
 import { GoDotFill } from "react-icons/go";
 
 interface Props {
-  searchParams: {};
+  searchParams: {
+    status: IssueStatusOptions;
+    orderBy: keyof IssueRecord;
+    page: string;
+  };
   issueMap: IssueRecord[];
 }
 

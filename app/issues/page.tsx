@@ -1,6 +1,6 @@
 import { IssueRecord, IssueStatusOptions } from "@/pocketbase-types";
 import Link from "next/link";
-import { RecordFullListOptions } from "pocketbase";
+import { ListResult, RecordFullListOptions } from "pocketbase";
 import Pagination from "../_components/Pagination";
 import IssuesPageFilter from "./_components/IssuesPageFilter";
 import IssuesTable from "./_components/IssuesTable";
@@ -30,9 +30,9 @@ const IssuesPage = async ({ searchParams }: Props) => {
   );
 
   const page = parseInt(searchParams.page) || 1;
-  const pageSize = 7;
+  const pageSize = 8;
 
-  const issues = await pb
+  const issues: ListResult<IssueRecord> = await pb
     .collection("issue")
     .getList(page, pageSize, { ...getOptions, cache: "no-store" });
 
@@ -41,7 +41,6 @@ const IssuesPage = async ({ searchParams }: Props) => {
     .getFullList({ ...getOptions, cache: "no-store" });
 
   const itemCount = fullIssueList.length;
-  console.log(itemCount);
 
   return (
     <>
@@ -52,12 +51,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
           <button className="btn btn-primary">New Issue</button>
         </Link>
       </div>
-      <IssuesTable
-        searchParams={searchParams}
-        issueMap={issues.items}
-        page={page}
-        pageSize={pageSize}
-      />
+      <IssuesTable searchParams={searchParams} issueMap={issues.items} />
       <Pagination
         pageSize={pageSize}
         currentPage={page}
