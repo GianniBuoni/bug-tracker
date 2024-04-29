@@ -22,16 +22,21 @@ const Home = async () => {
   return (
     <>
       <h1>Welcome!</h1>
-      <IssueSummaryChart
-        open={open.length}
-        closed={closed.length}
-        inProgress={inProgress.length}
-      />
-      <IssueSummary
-        open={open.length}
-        closed={closed.length}
-        inProgress={inProgress.length}
-      />
+      <div className="grid md:grid-cols-2 gap-5">
+        <div className="flex flex-col space-y-3">
+          <IssueSummary
+            open={open.length}
+            closed={closed.length}
+            inProgress={inProgress.length}
+          />
+          <IssueSummaryChart
+            open={open.length}
+            closed={closed.length}
+            inProgress={inProgress.length}
+          />
+        </div>
+        <LatestIssues />
+      </div>
     </>
   );
 };

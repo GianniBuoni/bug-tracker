@@ -7,7 +7,7 @@ import { ListResult } from "pocketbase";
 const LatestIssues = async () => {
   const latestIssues: ListResult<IssueRecord> = await pb
     .collection("issue")
-    .getList(1, 5, {
+    .getList(1, 6, {
       sort: "-created",
     });
   return (

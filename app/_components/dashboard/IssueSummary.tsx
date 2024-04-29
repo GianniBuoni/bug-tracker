@@ -35,10 +35,10 @@ const IssueSummary = ({ open, inProgress, closed }: Props) => {
     },
   ];
   return (
-    <div className="flex space-x-3">
+    <div className="flex justify-around">
       {containers.map((container) => (
         <div
-          className={`card h-25 text-primary-content ${container.color}`}
+          className={`card text-primary-content ${container.color}`}
           key={container.label}
         >
           <div className="flex flex-col card-body">
