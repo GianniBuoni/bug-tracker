@@ -21,7 +21,7 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
   const pageCount = Math.ceil(itemCount / pageSize);
   if (pageCount <= 1) return null;
   return (
-    <div className="join">
+    <div className="join mt-3">
       <button
         className="join-item btn"
         disabled={currentPage === 1}

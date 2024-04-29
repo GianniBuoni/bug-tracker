@@ -4,31 +4,13 @@ import IssueStatusBadge from "./IssueStatusBadge";
 import Link from "next/link";
 import IssueTimeStamp from "./IssueTimeStamp";
 import { GoDotFill } from "react-icons/go";
-import { RecordFullListOptions } from "pocketbase";
 
 interface Props {
-  params: { status: IssueStatusOptions; orderBy?: keyof IssueRecord };
+  searchParams: {};
+  issueMap: IssueRecord[];
 }
 
-const IssuesTable = async ({ params }: Props) => {
-  const statusFilter = params.status
-    ? { filter: `status='${params.status}'` }
-    : undefined;
-
-  const orderBy = params.orderBy
-    ? { sort: `${params.orderBy}` }
-    : { sort: "-created" };
-
-  const getOptions: RecordFullListOptions = Object.assign(
-    {},
-    statusFilter,
-    orderBy
-  );
-
-  const issues = await pb
-    .collection("issue")
-    .getFullList({ ...getOptions, cache: "no-store" });
-
+const IssuesTable = async ({ searchParams, issueMap }: Props) => {
   const columns: {
     label: string;
     value: keyof IssueRecord;
@@ -56,10 +38,12 @@ const IssuesTable = async ({ params }: Props) => {
             {columns.map((column) => (
               <th key={column.value} className={column.className}>
                 <div className="flex items-center space-x-1">
-                  <Link href={{ query: { ...params, orderBy: column.value } }}>
+                  <Link
+                    href={{ query: { ...searchParams, orderBy: column.value } }}
+                  >
                     {column.label}
                   </Link>
-                  {column.value === params.orderBy && (
+                  {column.value === searchParams.orderBy && (
                     <GoDotFill className="text-primary" />
                   )}
                 </div>
@@ -68,7 +52,7 @@ const IssuesTable = async ({ params }: Props) => {
           </tr>
         </thead>
         <tbody>
-          {issues.map((issue) => (
+          {issueMap.map((issue) => (
             <tr key={issue.id}>
               <td>
                 <Link
