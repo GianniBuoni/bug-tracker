@@ -5,8 +5,13 @@ import IssueActionButton from "../_components/IssueActionButton";
 import IssueDescription from "../_components/IssueDescription";
 import IssueDelete from "../_components/IssueDelete";
 import IssueAssign from "../_components/IssueAssign";
+import { title } from "process";
 
-const IssueDescriptionPage = async ({ params }: { params: IssueRecord }) => {
+interface Props {
+  params: { id: string };
+}
+
+const IssueDescriptionPage = async ({ params }: Props) => {
   let issue: IssueRecord = null!;
   try {
     issue = await pb
@@ -38,3 +43,14 @@ const IssueDescriptionPage = async ({ params }: { params: IssueRecord }) => {
 };
 
 export default IssueDescriptionPage;
+
+export async function generateMetadata({ params }: Props) {
+  const issue: IssueRecord = await fetch(
+    `${process.env.PB_HOST}/api/collections/issue/records/${params.id}`
+  ).then((res) => res.json());
+
+  return {
+    title: "Issue Tracker | " + issue.title,
+    description: issue.description,
+  };
+}

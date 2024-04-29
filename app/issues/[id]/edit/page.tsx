@@ -16,3 +16,14 @@ const IssueEditPage = async ({ params }: { params: { id: string } }) => {
 };
 
 export default IssueEditPage;
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const issue: IssueRecord = await fetch(
+    `${process.env.PB_HOST}/api/collections/issue/records/${params.id}`
+  ).then((res) => res.json());
+
+  return {
+    title: "Edit " + issue.title,
+    description: issue.description,
+  };
+}

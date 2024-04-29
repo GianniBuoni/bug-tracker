@@ -5,6 +5,7 @@ import Pagination from "../_components/Pagination";
 import IssuesPageFilter from "./_components/IssuesPageFilter";
 import IssuesTable from "./_components/IssuesTable";
 import { pb } from "../_services/pb";
+import { Metadata } from "next";
 
 export interface IssueQuery {
   status: IssueStatusOptions;
@@ -64,3 +65,8 @@ const IssuesPage = async ({ searchParams }: Props) => {
 };
 
 export default IssuesPage;
+
+export const metadata: Metadata = {
+  title: "Issue Tracker | Issues",
+  description: "View a list of project issues.",
+};

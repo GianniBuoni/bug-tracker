@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import IssueSummary from "./_components/dashboard/IssueSummary";
 import IssueSummaryChart from "./_components/dashboard/IssueSummaryChart";
 import LatestIssues from "./_components/dashboard/LatestIssues";
@@ -42,3 +43,7 @@ const Home = async () => {
 };
 
 export default Home;
+export const metadata: Metadata = {
+  title: "Issue Tracker | Dashboard",
+  description: "View a summary of project issues.",
+};
