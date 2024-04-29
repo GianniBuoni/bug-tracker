@@ -3,17 +3,14 @@ import IssueStatusBadge from "./IssueStatusBadge";
 import Link from "next/link";
 import IssueTimeStamp from "./IssueTimeStamp";
 import { GoDotFill } from "react-icons/go";
+import { IssueQuery } from "../page";
 
 interface Props {
-  searchParams: {
-    status: IssueStatusOptions;
-    orderBy: keyof IssueRecord;
-    page: string;
-  };
-  issueMap: IssueRecord[];
+  searchParams: IssueQuery;
+  issue: IssueRecord[];
 }
 
-const IssuesTable = async ({ searchParams, issueMap }: Props) => {
+const IssuesTable = async ({ searchParams, issue }: Props) => {
   const columns: {
     label: string;
     value: keyof IssueRecord;
@@ -34,8 +31,8 @@ const IssuesTable = async ({ searchParams, issueMap }: Props) => {
   ];
 
   return (
-    <div className="card card-bordered bg-base-300">
-      <table className="table table-pin-rows table-zebra">
+    <div className="card bg-base-300">
+      <table className="table table-zebra">
         <thead className="text-xl">
           <tr>
             {columns.map((column) => (
@@ -55,7 +52,7 @@ const IssuesTable = async ({ searchParams, issueMap }: Props) => {
           </tr>
         </thead>
         <tbody>
-          {issueMap.map((issue) => (
+          {issue.map((issue) => (
             <tr key={issue.id}>
               <td>
                 <Link

@@ -1,3 +1,5 @@
+import LatestIssues from "./_components/dashboard/LatestIssues";
+
 export default function Home({
   searchParams,
 }: {
@@ -6,6 +8,7 @@ export default function Home({
   return (
     <>
       <h1>Welcome!</h1>
+      <LatestIssues />
     </>
   );
 }

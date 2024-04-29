@@ -6,12 +6,14 @@ import IssuesPageFilter from "./_components/IssuesPageFilter";
 import IssuesTable from "./_components/IssuesTable";
 import { pb } from "../_services/pb";
 
+export interface IssueQuery {
+  status: IssueStatusOptions;
+  orderBy: keyof IssueRecord;
+  page: string;
+}
+
 interface Props {
-  searchParams: {
-    status: IssueStatusOptions;
-    orderBy: keyof IssueRecord;
-    page: string;
-  };
+  searchParams: IssueQuery;
 }
 
 const IssuesPage = async ({ searchParams }: Props) => {
@@ -51,7 +53,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
           <button className="btn btn-primary">New Issue</button>
         </Link>
       </div>
-      <IssuesTable searchParams={searchParams} issueMap={issues.items} />
+      <IssuesTable searchParams={searchParams} issue={issues.items} />
       <Pagination
         pageSize={pageSize}
         currentPage={page}
